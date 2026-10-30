@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Cleaner</title>
+</head>
+<body>
+
+    <h2>Sign Up Form</h2>
+
+    <form>
+
+        <label>Full Name:</label>
+        <input type="text" id="fullName">
+        <br><br>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password" id="password">
+        <br><br>
+
+        <label>Referral Code:</label>
+        <input type="text" id="referral">
+        <br><br>
+
+        <button type="button" onclick="validateForm()">Sign Up</button>
+
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+
+        function validateForm() {
+
+            let name = document.getElementById("fullName").value.trim();
+
+            let email = document.getElementById("email").value.trim().toLowerCase();
+
+            let password = document.getElementById("password").value;
+
+            let referral = document.getElementById("referral").value.trim();
+
+            let errors = [];
+
+            // 1. Full Name Validation
+
+            if (name.length < 3 || name.length > 40) {
+                errors.push("Name must be 3 to 40 characters.");
+            }
+
+            if (!name.includes(" ")) {
+                errors.push("Name must contain first and last name.");
+            }
+
+            // 2. Email Validation
+
+            let atPosition = email.indexOf("@");
+
+            if (atPosition === -1 ||
+                atPosition !== email.lastIndexOf("@") ||
+                atPosition === 0 ||
+                atPosition === email.length - 1 ||
+                email.indexOf(".", atPosition) === -1 ||
+                email.endsWith(".")) {
+
+                errors.push("Please enter a valid email address.");
+            }
+
+            // 3. Password Validation
+
+            if (password.length < 8) {
+                errors.push("Password must have at least 8 characters.");
+            }
+
+            if (password.includes(" ")) {
+                errors.push("Password must not contain spaces.");
+            }
+
+            if (password === password.toLowerCase()) {
+                errors.push("Password must contain one uppercase letter.");
+            }
+
+            if (!/[0-9]/.test(password)) {
+                errors.push("Password must contain one digit.");
+            }
+
+            // 4. Referral Code Validation
+
+            if (referral !== "") {
+
+                if (!referral.startsWith("JS-")) {
+                    errors.push("Referral code must start with JS-.");
+                }
+
+                if (referral.length !== 8) {
+                    errors.push("Referral code must be exactly 8 characters.");
+                }
+
+            }
+
+            // Final Result
+
+            let result = document.getElementById("result");
+
+            if (errors.length > 0) {
+
+                result.innerHTML = errors.join("<br>");
+
+            } else {
+
+                result.innerHTML = "Registration Successful!";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
